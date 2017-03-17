@@ -88,7 +88,7 @@ def learn_perceptron(neg_examples_nobias, pos_examples_nobias, w_init, w_gen_fea
 
 
 # WRITE THE CODE TO COMPLETE THIS FUNCTION
-def update_weights(neg_examples, pos_examples, w_current):
+def update_weights(neg_examples, pos_examples, w_current, alpha=1):
     ''' Updates the weights of the perceptron for incorrectly classified points
         using the perceptron update algorithm. This function makes one sweep
         over the dataset.
@@ -111,13 +111,17 @@ def update_weights(neg_examples, pos_examples, w_current):
         activation = this_case.dot(w)
         if (activation >= 0):
             # YOUR CODE HERE
+            w = np.transpose(w) - (this_case*alpha)
+            w=np.transpose(w)            
 
     for i in range(pos_examples.shape[0]):
         this_case = pos_examples[i]
         activation = this_case.dot(w)
         if (activation < 0):
             # YOUR CODE HERE
-
+            w = np.transpose(w) + (this_case*alpha)
+            w=np.transpose(w)            
+            
     return w
 
 
@@ -261,7 +265,7 @@ def plot_perceptron(neg_examples, pos_examples, mistakes0, mistakes1,
 #### Main program
 
 ## Loading data
-data1 = sio.loadmat('dataset3.mat')
+data1 = sio.loadmat('/Users/pradeepr/Developer/neuralnets/Hinton-Coursera-Python/assignment1/dataset1.mat')
 neg_examples_nobias = data1['neg_examples_nobias']
 pos_examples_nobias = data1['pos_examples_nobias']
 
